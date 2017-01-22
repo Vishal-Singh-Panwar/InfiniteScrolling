@@ -47,6 +47,8 @@ First is a required method. Implementation needs to provide a configured `UIColl
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+<div style='position:relative;padding-bottom:178%'><iframe src='https://gfycat.com/ifr/PointedPaltryHusky' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe></div>
+
 ## Requirements
 
 - Minimum iOS version: 9.0
