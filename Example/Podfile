@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'InfiniteScrolling_Example' do
+  pod 'InfiniteScrolling', :path => '../'
+
+  target 'InfiniteScrolling_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
