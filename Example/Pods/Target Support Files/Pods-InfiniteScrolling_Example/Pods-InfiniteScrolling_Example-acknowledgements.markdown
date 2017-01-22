@@ -3,7 +3,7 @@ This application makes use of the following third party libraries:
 
 ## InfiniteScrolling
 
-Copyright (c) 2017 Vishal Singh Panwar <vishal.panwar@mutualmobile.com>
+Copyright (c) 2017 Vishal Singh Panwar <vishal.singh030788@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
