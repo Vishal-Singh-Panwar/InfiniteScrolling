@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-'This pods add infinite scrolling ability in UICollectionView'.
+'This pod adds infinite scrolling ability in UICollectionView'.
 DESC
 
   s.homepage         = 'https://github.com/Vishal-Singh-Panwar/InfiniteScrolling'
