@@ -12,6 +12,8 @@ import InfiniteScrolling
 extension Card: InfiniteScollingData {}
 
 class ViewController: UIViewController {
+    @IBOutlet weak var collectionWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
     var infiniteScrollingBehaviour: InfiniteScrollingBehaviour!
     override func viewDidLoad() {
@@ -48,6 +50,9 @@ class ViewController: UIViewController {
     @IBAction func verticalScrolling(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         let maxNumberOfElements = infiniteScrollingBehaviour.collectionConfiguration.maxNumberOfCellsOnScreen
+        collectionWidthConstraint.constant = sender.isSelected ? 60 : 300
+        collectionHeightConstraint.constant = sender.isSelected ? 300 : 60
+        view.layoutIfNeeded()
         let configuration = sender.isSelected ? CollectionViewConfiguration(maxNumberOfCellsOnScreen: maxNumberOfElements, scrollingDirection: .vertical) : CollectionViewConfiguration(maxNumberOfCellsOnScreen: maxNumberOfElements, scrollingDirection: .horizontal)
         infiniteScrollingBehaviour.updateConfiguration(configuration: configuration)
     }
@@ -56,8 +61,11 @@ class ViewController: UIViewController {
 
 extension ViewController: InfiniteScrollingBehaviourDelegate {
     func configuredCell(forItemAtIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, forInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath) as! CollectionViewCell
-        cell.titleLabel.text = (data as! Card).name
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath)
+        if let collectionCell = cell as? CollectionViewCell,
+            let card = data as? Card {
+            collectionCell.titleLabel.text = card.name
+        }
         return cell
     }
 }

@@ -5,7 +5,6 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,10 +22,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Jcc-vt-eGM">
-                                <rect key="frame" x="16" y="163" width="342" height="342"/>
-                                <color key="backgroundColor" red="0.50874420870000003" green="0.51906906850000001" blue="0.71159833669999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="37" y="304" width="300" height="60"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Jcc-vt-eGM" secondAttribute="height" multiplier="1:1" id="fho-Ct-3dK"/>
+                                    <constraint firstAttribute="width" constant="300" id="55U-3J-9D9"/>
+                                    <constraint firstAttribute="height" constant="60" id="txj-W0-g4F"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SHI-Lv-LCV">
                                     <size key="itemSize" width="50" height="50"/>
@@ -37,42 +37,43 @@
                                 <cells/>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UtW-s7-Q0z">
-                                <rect key="frame" x="16" y="566" width="114" height="30"/>
-                                <state key="normal" title="Smaller Data Set"/>
+                                <rect key="frame" x="16" y="404" width="49" height="30"/>
+                                <state key="normal" title="Repeat"/>
                                 <connections>
                                     <action selector="update:" destination="q7g-zu-dmQ" eventType="touchUpInside" id="SCs-GS-k0O"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmH-qB-gE9">
+                                <rect key="frame" x="161" y="404" width="52" height="30"/>
+                                <state key="normal" title="Vertical"/>
+                                <connections>
+                                    <action selector="verticalScrolling:" destination="q7g-zu-dmQ" eventType="touchUpInside" id="Zqw-cV-9h8"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ug0-8g-hRD">
-                                <rect key="frame" x="153" y="566" width="69" height="30"/>
+                                <rect key="frame" x="289" y="404" width="69" height="30"/>
                                 <state key="normal" title="Paginated"/>
                                 <connections>
                                     <action selector="paginated:" destination="q7g-zu-dmQ" eventType="touchUpInside" id="jWi-Gw-tyO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y8O-kJ-gn1">
-                                <rect key="frame" x="306" y="566" width="52" height="30"/>
-                                <state key="normal" title="Vertical"/>
-                                <connections>
-                                    <action selector="verticalScrolling:" destination="q7g-zu-dmQ" eventType="touchUpInside" id="yrO-mv-6H8"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Jcc-vt-eGM" firstAttribute="leading" secondItem="QZM-4N-53G" secondAttribute="leadingMargin" id="ABM-Sb-DxA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ug0-8g-hRD" secondAttribute="trailing" constant="1" id="3YY-JV-JKd"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="UtW-s7-Q0z" secondAttribute="leading" id="7Ym-XT-P6V"/>
                             <constraint firstItem="ug0-8g-hRD" firstAttribute="top" secondItem="UtW-s7-Q0z" secondAttribute="top" id="LEG-cR-sW7"/>
                             <constraint firstItem="Jcc-vt-eGM" firstAttribute="centerX" secondItem="QZM-4N-53G" secondAttribute="centerX" id="OKS-nc-bma"/>
                             <constraint firstItem="Jcc-vt-eGM" firstAttribute="centerY" secondItem="QZM-4N-53G" secondAttribute="centerY" id="OaY-o6-77T"/>
-                            <constraint firstItem="UtW-s7-Q0z" firstAttribute="top" secondItem="Jcc-vt-eGM" secondAttribute="bottom" constant="61.5" id="a9n-4v-sOT"/>
-                            <constraint firstItem="ug0-8g-hRD" firstAttribute="centerX" secondItem="Jcc-vt-eGM" secondAttribute="centerX" id="adi-NA-ORb"/>
-                            <constraint firstItem="Y8O-kJ-gn1" firstAttribute="trailing" secondItem="Jcc-vt-eGM" secondAttribute="trailing" id="edj-O6-fZ2"/>
-                            <constraint firstItem="UtW-s7-Q0z" firstAttribute="leading" secondItem="Jcc-vt-eGM" secondAttribute="leading" id="ixf-Ov-7z9"/>
-                            <constraint firstItem="Y8O-kJ-gn1" firstAttribute="top" secondItem="ug0-8g-hRD" secondAttribute="top" id="uPO-tZ-4pS"/>
+                            <constraint firstItem="UtW-s7-Q0z" firstAttribute="top" secondItem="Jcc-vt-eGM" secondAttribute="bottom" constant="40" id="a9n-4v-sOT"/>
+                            <constraint firstItem="cmH-qB-gE9" firstAttribute="centerX" secondItem="Jcc-vt-eGM" secondAttribute="centerX" id="biR-NV-ylE"/>
+                            <constraint firstItem="cmH-qB-gE9" firstAttribute="top" secondItem="UtW-s7-Q0z" secondAttribute="top" id="mY7-yN-9fX"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="collectionHeightConstraint" destination="txj-W0-g4F" id="n8e-fU-Mw7"/>
                         <outlet property="collectionView" destination="Jcc-vt-eGM" id="zR4-ZB-wbY"/>
+                        <outlet property="collectionWidthConstraint" destination="55U-3J-9D9" id="6eD-6A-G2p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b8A-9M-GUG" sceneMemberID="firstResponder"/>
