@@ -1,0 +1,16 @@
+PODS:
+  - InfiniteScrolling (0.1.0)
+
+DEPENDENCIES:
+  - InfiniteScrolling (from `../`)
+
+EXTERNAL SOURCES:
+  InfiniteScrolling:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  InfiniteScrolling: 09903de17c4465c7dd7a13d5b965bc9efd91d25c
+
+PODFILE CHECKSUM: e9aebe60d3dc8d1c4f8393da9aad7ab26a514417
+
+COCOAPODS: 1.1.1

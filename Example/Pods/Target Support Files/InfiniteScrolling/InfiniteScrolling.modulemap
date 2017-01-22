@@ -1,0 +1,6 @@
+framework module InfiniteScrolling {
+  umbrella header "InfiniteScrolling-umbrella.h"
+
+  export *
+  module * { export * }
+}
