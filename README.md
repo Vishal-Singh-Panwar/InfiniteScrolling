@@ -11,7 +11,7 @@
 This is a basic implementation to add infinite scrolling behaviour in a `UICollectionView`.
 
 ## Usage
-Usage is pretty simple. `InfiniteScrollingBehaviour` has one designated initiliser.
+Usage is pretty simple. `InfiniteScrollingBehaviour` has one designated initializer.
 
 ```swift
 init(withCollectionView collectionView: UICollectionView, andData dataSet: [InfiniteScollingData], delegate: InfiniteScrollingBehaviourDelegate, configuration: CollectionViewConfiguration = .default)
@@ -20,12 +20,14 @@ init(withCollectionView collectionView: UICollectionView, andData dataSet: [Infi
 `InfiniteScrollingData` is a protocol which your modal needs to conform to. Right now its an empty protocol, but for scalability purpose, I felt like adding data set as collection of custom protocol instead of `Any`.
 
 `CollectionViewConfiguration` can be used to tweak some behaviour of the infinite scrolling.
-You neeed to provide `maxNumberOfCellsOnScreen` and `scrollingDirection`. Based on these two properties, boundary elements are added as well as size for cell is calculated.
+You need to provide `maxNumberOfCellsOnScreen` and `scrollingDirection`. Based on these two properties, boundary elements are added as well as size for cell is calculated.
 By default, `InfiniteScrollingBehaviour` has a `CollectionViewConfiguration` with `maxNumberOfCellsOnScreen` as 5 and `scrollingDirection` as `horizontal`.
 
 Currently it only supports 1 element in a line with 0 inter item spacing and line spacing.
 
 Incase you need to have infinite scrolling with pagination, enable pagination in the collectionView and pass in `maxNumberOfCellsOnScreen` 1.
+
+**Note:** Currently does not support custom flow layout and unequal cell sizes.
 
 ## InfiniteScrollingBehaviourDelegate
 The delegate has two methods.
