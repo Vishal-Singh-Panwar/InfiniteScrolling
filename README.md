@@ -20,12 +20,17 @@ init(withCollectionView collectionView: UICollectionView, andData dataSet: [Infi
 `InfiniteScrollingData` is a protocol which your modal needs to conform to. Right now its an empty protocol, but for scalability purpose, I felt like adding data set as collection of custom protocol instead of `Any`.
 
 `CollectionViewConfiguration` can be used to tweak some behaviour of the infinite scrolling.
-You neeed to provide `maxNumberOfCellsOnScreen` and `scrollingDirection`. Based on these two properties, boundary elements are added as well as size for cell is calculated.
-By default, `InfiniteScrollingBehaviour` has a `CollectionViewConfiguration` with `maxNumberOfCellsOnScreen` as 5 and `scrollingDirection` as `horizontal`.
+You neeed to provide `layoutType` and `scrollingDirection`. Based on these two properties, boundary elements are added as well as size for cell is calculated.
+By default, `InfiniteScrollingBehaviour` has a `CollectionViewConfiguration` with layout value `.numberOfCellsOnScreen(5)` and `scrollingDirection` is `horizontal`.
 
-Currently it only supports 1 element in a line with 0 inter item spacing and line spacing.
+## LayoutType
+`LayoutType` has two case:
+- `fixedSize(sizeValue: CGFloat, lineSpacing: CGFloat)`: If you need fixed size (if horizontal scrolling, `sizeValue` value will be cell's width, whereas in vertical scrolling, it will be cell's height. )
+- `case numberOfCellOnScreen(Double)`: If you dont care about size and you need fixed number of elements on screen irrespective of screen size.
 
-Incase you need to have infinite scrolling with pagination, enable pagination in the collectionView and pass in `maxNumberOfCellsOnScreen` 1.
+
+
+Incase you need to have infinite scrolling with pagination, enable pagination in the collectionView and pass in `numberOfCellsOnScreen` 1.
 
 ## InfiniteScrollingBehaviourDelegate
 The delegate has two methods.

@@ -26,7 +26,8 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         if let _ = infiniteScrollingBehaviour {}
         else {
-            infiniteScrollingBehaviour = InfiniteScrollingBehaviour(withCollectionView: collectionView, andData: Card.dummyCards, delegate: self)
+            let configuration = CollectionViewConfiguration(layoutType: .fixedSize(sizeValue: 60, lineSpacing: 10), scrollingDirection: .horizontal)
+            infiniteScrollingBehaviour = InfiniteScrollingBehaviour(withCollectionView: collectionView, andData: Card.dummyCards, delegate: self, configuration: configuration)
         }
     }
     
@@ -43,17 +44,18 @@ class ViewController: UIViewController {
         sender.isSelected = !sender.isSelected
         collectionView.isPagingEnabled = sender.isSelected
         let scrollingDirection = infiniteScrollingBehaviour.collectionConfiguration.scrollingDirection
-        let configuration = sender.isSelected ? CollectionViewConfiguration(maxNumberOfCellsOnScreen: 1, scrollingDirection: scrollingDirection) :  CollectionViewConfiguration(maxNumberOfCellsOnScreen: 5, scrollingDirection: scrollingDirection)
+        let configuration = sender.isSelected ? CollectionViewConfiguration(layoutType: .numberOfCellOnScreen(1), scrollingDirection: scrollingDirection) :  CollectionViewConfiguration(layoutType: .numberOfCellOnScreen(5), scrollingDirection: scrollingDirection)
         infiniteScrollingBehaviour.updateConfiguration(configuration: configuration)
     }
     
     @IBAction func verticalScrolling(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        let maxNumberOfElements = infiniteScrollingBehaviour.collectionConfiguration.maxNumberOfCellsOnScreen
+        
+        let layout = infiniteScrollingBehaviour.collectionConfiguration.layoutType
         collectionWidthConstraint.constant = sender.isSelected ? 60 : 300
         collectionHeightConstraint.constant = sender.isSelected ? 300 : 60
         view.layoutIfNeeded()
-        let configuration = sender.isSelected ? CollectionViewConfiguration(maxNumberOfCellsOnScreen: maxNumberOfElements, scrollingDirection: .vertical) : CollectionViewConfiguration(maxNumberOfCellsOnScreen: maxNumberOfElements, scrollingDirection: .horizontal)
+        let configuration = sender.isSelected ? CollectionViewConfiguration(layoutType: layout, scrollingDirection: .vertical) : CollectionViewConfiguration(layoutType: layout, scrollingDirection: .horizontal)
         infiniteScrollingBehaviour.updateConfiguration(configuration: configuration)
     }
 }
