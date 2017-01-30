@@ -17,6 +17,7 @@
 		DC7A1DFB1E3513F100C79A8B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A1DFA1E3513F100C79A8B /* Card.swift */; };
 		DC7A1DFE1E35146600C79A8B /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A1DFC1E35146600C79A8B /* CollectionViewCell.swift */; };
 		DC7A1DFF1E35146600C79A8B /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC7A1DFD1E35146600C79A8B /* CollectionViewCell.xib */; };
+		DC9E3BE81E3FC64E00DAB830 /* .codeclimate.yml in Resources */ = {isa = PBXBuildFile; fileRef = DC9E3BE71E3FC64E00DAB830 /* .codeclimate.yml */; };
 		F87B02A729E45B7412CF009E /* Pods_InfiniteScrolling_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E0A860DBF9948FECC10A98F /* Pods_InfiniteScrolling_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +54,7 @@
 		DC7A1DFA1E3513F100C79A8B /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		DC7A1DFC1E35146600C79A8B /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		DC7A1DFD1E35146600C79A8B /* CollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
-		DC9E3BE61E3FC55A00DAB830 /* .codeclimate.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .codeclimate.yml; sourceTree = "<group>"; };
+		DC9E3BE71E3FC64E00DAB830 /* .codeclimate.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .codeclimate.yml; path = ../.codeclimate.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +80,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				DC9E3BE61E3FC55A00DAB830 /* .codeclimate.yml */,
+				DC9E3BE71E3FC64E00DAB830 /* .codeclimate.yml */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for InfiniteScrolling */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -264,6 +265,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				DC9E3BE81E3FC64E00DAB830 /* .codeclimate.yml in Resources */,
 				DC7A1DFF1E35146600C79A8B /* CollectionViewCell.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
