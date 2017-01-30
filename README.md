@@ -25,7 +25,7 @@ By default, `InfiniteScrollingBehaviour` has a `CollectionViewConfiguration` wit
 
 ## LayoutType
 `LayoutType` has two case:
-- `fixedSize(sizeValue: CGFloat, lineSpacing: CGFloat)`: If you need fixed size (if horizontal scrolling, `sizeValue` value will be cell's width, whereas in vertical scrolling, it will be cell's height. )
+- `case fixedSize(sizeValue: CGFloat, lineSpacing: CGFloat)`: If you need fixed size (if horizontal scrolling, `sizeValue` value will be cell's width, whereas in vertical scrolling, it will be cell's height. )
 - `case numberOfCellOnScreen(Double)`: If you dont care about size and you need fixed number of elements on screen irrespective of screen size.
 
 
