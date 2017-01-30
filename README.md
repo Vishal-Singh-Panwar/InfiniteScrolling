@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/InfiniteScrolling.svg?style=flat)](http://cocoapods.org/pods/InfiniteScrolling)
 [![License](https://img.shields.io/cocoapods/l/InfiniteScrolling.svg?style=flat)](http://cocoapods.org/pods/InfiniteScrolling)
 [![Platform](https://img.shields.io/cocoapods/p/InfiniteScrolling.svg?style=flat)](http://cocoapods.org/pods/InfiniteScrolling)
+[![Code Climate](https://codeclimate.com/github/Vishal-Singh-Panwar/InfiniteScrolling/badges/gpa.svg)](https://codeclimate.com/github/Vishal-Singh-Panwar/InfiniteScrolling)
 
 
 ## Add infinite scrolling to collection view.
