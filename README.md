@@ -11,7 +11,7 @@
 This is a basic implementation to add infinite scrolling behaviour in a `UICollectionView`.
 
 ## Usage
-Usage is pretty simple. `InfiniteScrollingBehaviour` has one designated initiliser.
+Usage is pretty simple. `InfiniteScrollingBehaviour` has one designated initializer.
 
 ```swift
 init(withCollectionView collectionView: UICollectionView, andData dataSet: [InfiniteScollingData], delegate: InfiniteScrollingBehaviourDelegate, configuration: CollectionViewConfiguration = .default)
@@ -31,6 +31,8 @@ By default, `InfiniteScrollingBehaviour` has a `CollectionViewConfiguration` wit
 
 
 Incase you need to have infinite scrolling with pagination, enable pagination in the collectionView and pass in `numberOfCellsOnScreen` 1.
+
+**Note:** Currently does not support custom flow layout and unequal cell sizes.
 
 ## InfiniteScrollingBehaviourDelegate
 The delegate has two methods.
