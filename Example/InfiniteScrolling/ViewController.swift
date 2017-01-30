@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
     var infiniteScrollingBehaviour: InfiniteScrollingBehaviour!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -30,7 +31,7 @@ class ViewController: UIViewController {
             infiniteScrollingBehaviour = InfiniteScrollingBehaviour(withCollectionView: collectionView, andData: Card.dummyCards, delegate: self, configuration: configuration)
         }
     }
-    
+
     private func registerCell() {
         collectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CellID")
     }
@@ -44,7 +45,7 @@ class ViewController: UIViewController {
         sender.isSelected = !sender.isSelected
         collectionView.isPagingEnabled = sender.isSelected
         let scrollingDirection = infiniteScrollingBehaviour.collectionConfiguration.scrollingDirection
-        let configuration = sender.isSelected ? CollectionViewConfiguration(layoutType: .numberOfCellOnScreen(1), scrollingDirection: scrollingDirection) :  CollectionViewConfiguration(layoutType: .numberOfCellOnScreen(5), scrollingDirection: scrollingDirection)
+        let configuration = sender.isSelected ? CollectionViewConfiguration(layoutType: .numberOfCellOnScreen(1), scrollingDirection: scrollingDirection) : CollectionViewConfiguration(layoutType: .numberOfCellOnScreen(5), scrollingDirection: scrollingDirection)
         infiniteScrollingBehaviour.updateConfiguration(configuration: configuration)
     }
     
@@ -58,10 +59,12 @@ class ViewController: UIViewController {
         let configuration = sender.isSelected ? CollectionViewConfiguration(layoutType: layout, scrollingDirection: .vertical) : CollectionViewConfiguration(layoutType: layout, scrollingDirection: .horizontal)
         infiniteScrollingBehaviour.updateConfiguration(configuration: configuration)
     }
+    
 }
 
 
 extension ViewController: InfiniteScrollingBehaviourDelegate {
+    
     func configuredCell(forItemAtIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, forInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath)
         if let collectionCell = cell as? CollectionViewCell,
@@ -70,4 +73,5 @@ extension ViewController: InfiniteScrollingBehaviourDelegate {
         }
         return cell
     }
+    
 }
