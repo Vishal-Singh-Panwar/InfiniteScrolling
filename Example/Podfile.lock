@@ -1,5 +1,5 @@
 PODS:
-  - InfiniteScrolling (0.1.0)
+  - InfiniteScrolling (1.0.0)
 
 DEPENDENCIES:
   - InfiniteScrolling (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  InfiniteScrolling: 69c8989be690b6347dd4317c4ddcff0285f119bf
+  InfiniteScrolling: ce6ffd350e909bc6f34878c9d6d62c3b9272f2ce
 
 PODFILE CHECKSUM: e9aebe60d3dc8d1c4f8393da9aad7ab26a514417
 
