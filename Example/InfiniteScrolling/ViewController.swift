@@ -73,5 +73,4 @@ extension ViewController: InfiniteScrollingBehaviourDelegate {
         }
         return cell
     }
-    
 }

@@ -11,10 +11,12 @@ import UIKit
 public protocol InfiniteScrollingBehaviourDelegate: class {
     func configuredCell(forItemAtIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, forInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> UICollectionViewCell
     func didSelectItem(atIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> Void
+    func didEndScrolling(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour)
 }
 
 public extension InfiniteScrollingBehaviourDelegate {
     func didSelectItem(atIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> Void { }
+    func didEndScrolling(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) { }
 }
 
 public protocol InfiniteScollingData { }
@@ -67,7 +69,7 @@ public class InfiniteScrollingBehaviour: NSObject {
     }
     
     fileprivate(set) public var collectionConfiguration: CollectionViewConfiguration
-
+    
     public init(withCollectionView collectionView: UICollectionView, andData dataSet: [InfiniteScollingData], delegate: InfiniteScrollingBehaviourDelegate, configuration: CollectionViewConfiguration = .default) {
         self.collectionView = collectionView
         self.dataSet = dataSet
@@ -155,7 +157,7 @@ public class InfiniteScrollingBehaviour: NSObject {
     public func indexInBoundaryDataSet(forIndexInOriginalDataSet index: Int) -> Int {
         return index + numberOfBoundaryElements
     }
-
+    
     
     public func reload(withData dataSet: [InfiniteScollingData]) {
         self.dataSet = dataSet
@@ -211,6 +213,17 @@ extension InfiniteScrollingBehaviour: UICollectionViewDelegateFlowLayout {
             scrollView.contentOffset = updatedOffsetPoint
         }
     }
+    
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        delegate?.didEndScrolling(inInfiniteScrollingBehaviour: self)
+    }
+    
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if decelerate == false {
+            delegate?.didEndScrolling(inInfiniteScrollingBehaviour: self)
+        }
+    }
+
 }
 
 extension InfiniteScrollingBehaviour: UICollectionViewDataSource {
