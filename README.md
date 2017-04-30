@@ -48,7 +48,7 @@ First is a required method. Implementation needs to provide a configured `UIColl
 - **data**: `InfiniteScollingData` which will be used to configure your cell.
 
 
-**Note:**If the number of elements in the data set is smaller than the `maxNumberOfCellsOnScreen`, than it automatically adjusts boundary to repeat the same elements on screen.
+**Note:** If the number of elements in the data set is smaller than the `maxNumberOfCellsOnScreen`, than it automatically adjusts boundary to repeat the same elements on screen.
 
 
 ## Example
