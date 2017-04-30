@@ -55,9 +55,8 @@ First is a required method. Implementation needs to provide a configured `UIColl
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-<a href="https://gfycat.com/FemalePastFly">
+
 ![2017-01-23 00_52_09](https://thumbs.gfycat.com/FemalePastFly-size_restricted.gif)
-</a>
 
 
 ## Requirements
