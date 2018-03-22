@@ -12,11 +12,19 @@ public protocol InfiniteScrollingBehaviourDelegate: class {
     func configuredCell(forItemAtIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, forInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> UICollectionViewCell
     func didSelectItem(atIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> Void
     func didEndScrolling(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour)
+    func verticalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: InfiniteScrollingBehaviour) -> CGFloat
+    func horizonalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: InfiniteScrollingBehaviour) -> CGFloat
 }
 
 public extension InfiniteScrollingBehaviourDelegate {
     func didSelectItem(atIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> Void { }
     func didEndScrolling(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) { }
+    func verticalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: InfiniteScrollingBehaviour) -> CGFloat {
+        return 0
+    }
+    func horizonalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: InfiniteScrollingBehaviour) -> CGFloat {
+        return 0
+    }
 }
 
 public protocol InfiniteScollingData { }
@@ -187,9 +195,32 @@ extension InfiniteScrollingBehaviour: UICollectionViewDelegateFlowLayout {
         return padding
     }
     
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        switch (collectionConfiguration.scrollingDirection, delegate) {
+        case (.horizontal, .some(let delegate)):
+            let inset = delegate.verticalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: self)
+            return UIEdgeInsetsMake(inset, 0, inset, 0)
+        case (.vertical, .some(let delegate)):
+            let inset = delegate.horizonalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: self)
+            return UIEdgeInsetsMake(0, inset, 0, inset)
+        case (_, _):
+            return UIEdgeInsetsMake(0, 0, 0, 0)
+        }
+    }
+    
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = collectionConfiguration.scrollingDirection == .horizontal ? CGSize(width: cellSize, height: collectionView.bounds.size.height) : CGSize(width: collectionView.bounds.size.width, height: cellSize)
-        return size
+        switch (collectionConfiguration.scrollingDirection, delegate) {
+        case (.horizontal, .some(let delegate)):
+            let height = collectionView.bounds.size.height - 2*delegate.verticalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: self)
+            return CGSize(width: cellSize, height: height)
+        case (.vertical, .some(let delegate)):
+            let width = collectionView.bounds.size.width - 2*delegate.horizonalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: self)
+            return CGSize(width: width, height: cellSize)
+        case (.horizontal, _):
+            return CGSize(width: cellSize, height: collectionView.bounds.size.height)
+        case (.vertical, _):
+            return CGSize(width: collectionView.bounds.size.width, height: cellSize)
+        }
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -223,7 +254,7 @@ extension InfiniteScrollingBehaviour: UICollectionViewDelegateFlowLayout {
             delegate?.didEndScrolling(inInfiniteScrollingBehaviour: self)
         }
     }
-
+    
 }
 
 extension InfiniteScrollingBehaviour: UICollectionViewDataSource {
@@ -259,3 +290,4 @@ extension Int {
         }
     }
 }
+
