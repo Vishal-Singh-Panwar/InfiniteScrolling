@@ -11,7 +11,6 @@ import UIKit
 public protocol InfiniteScrollingBehaviourDelegate: class {
     func configuredCell(forItemAtIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, forInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> UICollectionViewCell
     func didSelectItem(atIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> Void
-    
     func willBeginDragging(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour)
     func didEndScrolling(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour)
     func updateCurrentPageIndex(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour, newPage: Int)
