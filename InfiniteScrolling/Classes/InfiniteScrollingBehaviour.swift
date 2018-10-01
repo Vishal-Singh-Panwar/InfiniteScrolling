@@ -11,6 +11,7 @@ import UIKit
 public protocol InfiniteScrollingBehaviourDelegate: class {
     func configuredCell(forItemAtIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, forInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> UICollectionViewCell
     func didSelectItem(atIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> Void
+    func willBeginDragging(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour)
     func didEndScrolling(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour)
     func verticalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: InfiniteScrollingBehaviour) -> CGFloat
     func horizonalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: InfiniteScrollingBehaviour) -> CGFloat
@@ -18,6 +19,7 @@ public protocol InfiniteScrollingBehaviourDelegate: class {
 
 public extension InfiniteScrollingBehaviourDelegate {
     func didSelectItem(atIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> Void { }
+    func willBeginDragging(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) { }
     func didEndScrolling(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) { }
     func verticalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: InfiniteScrollingBehaviour) -> CGFloat {
         return 0
@@ -243,6 +245,10 @@ extension InfiniteScrollingBehaviour: UICollectionViewDelegateFlowLayout {
                 CGPoint(x: boundaryLessSize, y: 0) : CGPoint(x: 0, y: boundaryLessSize)
             scrollView.contentOffset = updatedOffsetPoint
         }
+    }
+    
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        delegate?.willBeginDragging(inInfiniteScrollingBehaviour: self)
     }
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
