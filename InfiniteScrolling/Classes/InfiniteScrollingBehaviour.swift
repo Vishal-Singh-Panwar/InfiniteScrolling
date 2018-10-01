@@ -251,7 +251,7 @@ extension InfiniteScrollingBehaviour: UICollectionViewDelegateFlowLayout {
                 CGPoint(x: boundaryLessSize, y: 0) : CGPoint(x: 0, y: boundaryLessSize)
             scrollView.contentOffset = updatedOffsetPoint
         }
-        let page = indexInOriginalDataSet(forIndexInBoundaryDataSet: Int(round(scrollView.contentOffset.x / cellSize)))
+        let page = indexInOriginalDataSet(forIndexInBoundaryDataSet: Int(round(contentOffsetValue / cellSize)))
         if page != currentPage { currentPage = page }
     }
     
