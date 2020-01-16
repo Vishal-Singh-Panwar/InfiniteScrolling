@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'InfiniteScrolling'
-  s.version          = '1.0.3'
+  s.version          = '1.0.4'
   s.summary          = 'Add infinite scrolling to collection view.'
 
 # This description is used to generate tags and improve search results.
