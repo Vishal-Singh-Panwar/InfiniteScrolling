@@ -11,14 +11,18 @@ import UIKit
 public protocol InfiniteScrollingBehaviourDelegate: class {
     func configuredCell(forItemAtIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, forInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> UICollectionViewCell
     func didSelectItem(atIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> Void
+    func willBeginDragging(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour)
     func didEndScrolling(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour)
+    func updateCurrentPageIndex(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour, newPage: Int)
     func verticalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: InfiniteScrollingBehaviour) -> CGFloat
     func horizonalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: InfiniteScrollingBehaviour) -> CGFloat
 }
 
 public extension InfiniteScrollingBehaviourDelegate {
     func didSelectItem(atIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> Void { }
+    func willBeginDragging(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) { }
     func didEndScrolling(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) { }
+    func updateCurrentPageIndex(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour, newPage: Int) { }
     func verticalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: InfiniteScrollingBehaviour) -> CGFloat {
         return 0
     }
@@ -53,6 +57,10 @@ public class InfiniteScrollingBehaviour: NSObject {
     fileprivate(set) public weak var delegate: InfiniteScrollingBehaviourDelegate?
     fileprivate(set) public var dataSet: [InfiniteScollingData]
     fileprivate(set) public var dataSetWithBoundary: [InfiniteScollingData] = []
+    
+    fileprivate var currentPage = 0 {
+        didSet { delegate?.updateCurrentPageIndex(inInfiniteScrollingBehaviour: self, newPage: currentPage) }
+    }
     
     fileprivate var collectionViewBoundsValue: CGFloat {
         get {
@@ -243,6 +251,12 @@ extension InfiniteScrollingBehaviour: UICollectionViewDelegateFlowLayout {
                 CGPoint(x: boundaryLessSize, y: 0) : CGPoint(x: 0, y: boundaryLessSize)
             scrollView.contentOffset = updatedOffsetPoint
         }
+        let page = indexInOriginalDataSet(forIndexInBoundaryDataSet: Int(round(contentOffsetValue / cellSize)))
+        if page != currentPage { currentPage = page }
+    }
+    
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        delegate?.willBeginDragging(inInfiniteScrollingBehaviour: self)
     }
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
