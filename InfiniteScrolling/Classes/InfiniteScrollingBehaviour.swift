@@ -30,8 +30,9 @@ public extension InfiniteScrollingBehaviourDelegate {
 public protocol InfiniteScollingData { }
 
 public enum LayoutType {
-    case fixedSize(sizeValue: CGFloat, lineSpacing: CGFloat)
-    case numberOfCellOnScreen(Double)
+    case variableSizes([CGFloat], lineSpacing: CGFloat)
+//    case fixedSize(sizeValue: CGFloat, lineSpacing: CGFloat)
+    case numberOfCellOnScreen(Int)
 }
 
 public struct CollectionViewConfiguration {
@@ -46,11 +47,18 @@ public struct CollectionViewConfiguration {
 }
 
 public class InfiniteScrollingBehaviour: NSObject {
-    fileprivate var cellSize: CGFloat = 0.0
+//    fileprivate var cellSize: CGFloat = 0
+    fileprivate var cellSizes: [CGFloat] = []
+    fileprivate func cellSize(at index: Int) -> CGFloat {
+        return cellSizes[index]
+    }
+    // considering paddings to be zero
     fileprivate var padding: CGFloat = 0.0
-    fileprivate var numberOfBoundaryElements = 0
+    
     fileprivate(set) public weak var collectionView: UICollectionView!
     fileprivate(set) public weak var delegate: InfiniteScrollingBehaviourDelegate?
+    
+    fileprivate var numberOfBoundaryElements = 0
     fileprivate(set) public var dataSet: [InfiniteScollingData]
     fileprivate(set) public var dataSetWithBoundary: [InfiniteScollingData] = []
     
@@ -61,6 +69,14 @@ public class InfiniteScrollingBehaviour: NSObject {
                 return collectionView.bounds.size.width
             case .vertical:
                 return collectionView.bounds.size.height
+            @unknown default:
+                if let layout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+                    if layout.scrollDirection == .horizontal {
+                        return collectionView.bounds.size.width
+                    }
+                    return collectionView.bounds.size.height
+                }
+                return .zero
             }
         }
     }
@@ -72,6 +88,14 @@ public class InfiniteScrollingBehaviour: NSObject {
                 return collectionView.contentSize.width
             case .vertical:
                 return collectionView.contentSize.height
+            @unknown default:
+                if let layout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+                    if layout.scrollDirection == .horizontal {
+                        return collectionView.contentSize.width
+                    }
+                    return collectionView.contentSize.height
+                }
+                return .zero
             }
         }
     }
@@ -93,19 +117,32 @@ public class InfiniteScrollingBehaviour: NSObject {
     private func configureBoundariesForInfiniteScroll() {
         dataSetWithBoundary = dataSet
         calculateCellWidth()
-        let absoluteNumberOfElementsOnScreen = ceil(collectionViewBoundsValue/cellSize)
-        numberOfBoundaryElements = Int(absoluteNumberOfElementsOnScreen)
+        var combinedSize: CGFloat = 0
+        for (idx, size) in cellSizes.enumerated() {
+            if combinedSize > collectionViewBoundsValue {
+                numberOfBoundaryElements = idx
+                break
+            }
+            combinedSize += size
+        }
+//        let absoluteNumberOfElementsOnScreen = ceil(collectionViewBoundsValue/cellSize)
+//        numberOfBoundaryElements = Int(absoluteNumberOfElementsOnScreen)
         addLeadingBoundaryElements()
         addTrailingBoundaryElements()
     }
     
     private func calculateCellWidth() {
         switch collectionConfiguration.layoutType {
-        case .fixedSize(let sizeValue, let padding):
-            cellSize = sizeValue
+        case .variableSizes(let sizes, let padding):
+            cellSizes = sizes
+            self.padding = padding
+//        case .fixedSize(let sizeValue, let padding):
+//            cellSize = sizeValue
             self.padding = padding
         case .numberOfCellOnScreen(let numberOfCellsOnScreen):
-            cellSize = (collectionViewBoundsValue/numberOfCellsOnScreen.cgFloat)
+            cellSizes = Array(
+                repeating: (collectionViewBoundsValue/numberOfCellsOnScreen.cgFloat),
+                count: numberOfCellsOnScreen)
             padding = 0
         }
     }
@@ -209,17 +246,18 @@ extension InfiniteScrollingBehaviour: UICollectionViewDelegateFlowLayout {
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let originalIdx = indexInOriginalDataSet(forIndexInBoundaryDataSet: indexPath.item)
         switch (collectionConfiguration.scrollingDirection, delegate) {
         case (.horizontal, .some(let delegate)):
             let height = collectionView.bounds.size.height - 2*delegate.verticalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: self)
-            return CGSize(width: cellSize, height: height)
+            return CGSize(width: cellSizes[originalIdx], height: height)
         case (.vertical, .some(let delegate)):
             let width = collectionView.bounds.size.width - 2*delegate.horizonalPaddingForHorizontalInfiniteScrollingBehaviour(behaviour: self)
-            return CGSize(width: width, height: cellSize)
+            return CGSize(width: width, height: cellSizes[originalIdx])
         case (.horizontal, _):
-            return CGSize(width: cellSize, height: collectionView.bounds.size.height)
+            return CGSize(width: cellSizes[originalIdx], height: collectionView.bounds.size.height)
         case (.vertical, _):
-            return CGSize(width: collectionView.bounds.size.width, height: cellSize)
+            return CGSize(width: collectionView.bounds.size.width, height: cellSizes[originalIdx])
         }
     }
     
@@ -230,7 +268,11 @@ extension InfiniteScrollingBehaviour: UICollectionViewDelegateFlowLayout {
     
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let boundarySize = numberOfBoundaryElements.cgFloat * cellSize + (numberOfBoundaryElements.cgFloat * padding)
+        var boundaryElementsSize: CGFloat = 0
+        for idx in 0..<numberOfBoundaryElements {
+            boundaryElementsSize += cellSizes[idx]
+        }
+        let boundarySize = boundaryElementsSize + (numberOfBoundaryElements.cgFloat * padding)
         let contentOffsetValue = collectionConfiguration.scrollingDirection == .horizontal ? scrollView.contentOffset.x : scrollView.contentOffset.y
         if contentOffsetValue >= (scrollViewContentSizeValue - boundarySize) {
             let offset = boundarySize - padding
@@ -238,7 +280,7 @@ extension InfiniteScrollingBehaviour: UICollectionViewDelegateFlowLayout {
                 CGPoint(x: offset, y: 0) : CGPoint(x: 0, y: offset)
             scrollView.contentOffset = updatedOffsetPoint
         } else if contentOffsetValue <= 0 {
-            let boundaryLessSize = dataSet.count.cgFloat * cellSize + (dataSet.count.cgFloat * padding)
+            let boundaryLessSize = cellSizes.reduce(0) { $0 + $1 } + (dataSet.count.cgFloat * padding)
             let updatedOffsetPoint = collectionConfiguration.scrollingDirection == .horizontal ?
                 CGPoint(x: boundaryLessSize, y: 0) : CGPoint(x: 0, y: boundaryLessSize)
             scrollView.contentOffset = updatedOffsetPoint

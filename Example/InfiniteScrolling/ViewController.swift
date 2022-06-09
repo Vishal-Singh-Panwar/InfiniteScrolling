@@ -27,7 +27,9 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         if let _ = infiniteScrollingBehaviour {}
         else {
-            let configuration = CollectionViewConfiguration(layoutType: .fixedSize(sizeValue: 60, lineSpacing: 10), scrollingDirection: .horizontal)
+            
+            let sizes: [CGFloat] = [50, 60, 90, 100, 20, 10, 30, 55, 70, 66, 33, 12, 99, 89, 45]
+            let configuration = CollectionViewConfiguration(layoutType: .variableSizes(sizes, lineSpacing: 10), scrollingDirection: .horizontal)
             infiniteScrollingBehaviour = InfiniteScrollingBehaviour(withCollectionView: collectionView, andData: Card.dummyCards, delegate: self, configuration: configuration)
         }
     }
